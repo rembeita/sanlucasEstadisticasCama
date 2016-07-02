@@ -1,0 +1,155 @@
+{% include "estadisticasOcupacion/header.html" %}
+
+
+<!-- Start Formoid form-->
+<link rel="stylesheet" href="/estadisticas/static/formoid-solid-blue.css" type="text/css" />
+<script type="text/javascript" src="/estadisticas/static/jquery.min.js"></script>
+<form class="formoid-solid-blue" style="background-color:#FFFFFF;font-size:14px;font-family:'Roboto',Arial,Helvetica,sans-serif;color:#34495E;max-width:800px;min-width:150px" method="post" action="/estadisticas/estadisticasOcupacion/">
+        {% csrf_token %}
+	<div class="title">
+		<h2 style="text-align: center">Sanatorio San Lucas</h2>
+		<h2 style="text-align: center">Resumen</h2>
+	</div>
+	<div class="title2" align="center">
+		{% if  CAMAS_OCUPADAS > 70 %}
+		<h3 style="color: green"><strong>OCUPACION: {{ CAMAS_OCUPADAS }}%</strong></h3>
+		<h3 style="color: green"><strong>DISPONIBLES: {{ CAMAS_DISPONIBLES }}%</strong></h3>
+		{% else %}
+		<h3 style="color: red"><strong>OCUPACION: {{ CAMAS_OCUPADAS }}%</strong></h3>
+		<h3 style="color: red"><strong>DISPONIBLES: {{ CAMAS_DISPONIBLES }}%</strong></h3>
+		{% endif %}
+		<input type="hidden" name="nombrepaciente" value="{{ PACIENTE }}">
+		<input type="hidden" name="dnipaciente" value="{{ DNIPACIENTE }}">
+	</div>
+	<div class="title">
+		<h2 style="text-align: center">Edificio 1</h2>
+	</div>
+	{% for i in CAMAS_EDIFICIO1 %}
+		{% if forloop.first %}
+	<div>
+		<h3 style="font-size: 20px" align="center">Neo Natologia</h3>
+	</div>
+		{% endif %}
+		{% if forloop.counter == 2 %}
+	<div>
+		<h3 style="font-size: 20px" align="center">Primer Piso</h3>
+	</div>
+		{% endif %}
+		{% if forloop.counter == 3 %}
+	<div>
+		<h3 style="font-size: 20px" align="center">Segundo Piso</h3>
+	</div>
+
+		{% endif %}
+		{% if forloop.counter == 4 %}
+	<div>
+		<h3 style="font-size: 20px" align="center">Tercer Piso</h3>
+	</div>
+
+		{% endif %}
+		{% if forloop.counter == 5 %}
+	<div>
+		<h3 style="font-size: 20px" align="center">Unidad Coronaria</h3>
+	</div>
+
+		{% endif %}
+		{% if forloop.counter == 6 %}
+	<div>
+		<h3 style="font-size: 20px" align="center">Pediatria</h3>
+	</div>
+
+		{% endif %}
+		{% if forloop.counter == 7 %}
+	<div>
+		<h3 style="font-size: 20px" align="center">Unidad Tratamientos Intensivos</h3>
+	</div>
+
+		{% endif %}
+	<div>
+	<table> 
+		<tr>
+		{% for j in i %}
+			<td>
+        <h3 style="font-size: 15px; color: black" align="left">   
+			{% if j.2 > 0 %}
+				<img src="/estadisticas/static/cama_ocupada.jpg" width="80" height="80">
+  		 	{% endif %}		 
+			{% if forloop.last %}
+			  </td></tr>
+                                <tr><td>
+				<h5 style="font-size: 14px; color: blue;" align="center">Ocupacion <br>{{ j }}%</h5>	
+  		 	{% endif %}		 
+			{% if j.2 = 0 %}
+				<img src="/estadisticas/static/cama_libre.jpg" width="80" height="80">
+  		 	{% endif %}		 
+			</br>
+			{{ j.1 }}
+	    </h3>
+			</td>
+                {% if forloop.counter == 7 %}
+			<tr></tr>
+                {% endif %}
+                {% endfor %} 
+		</tr>
+	</table>
+
+	</div>
+	{% endfor %}
+
+
+	<div class="title">
+		<h2 style="text-align: center">Edificio 2</h2>
+	</div>
+	{% for i in CAMAS_EDIFICIO2 %}
+		{% if forloop.first %}
+	<div align="center">
+		<h3 style="font-size: 20px">Planta Baja</h3>
+	</div>
+		{% endif %}
+		{% if forloop.counter == 2 %}
+	<div align="center">
+		<h3 style="font-size: 20px">Primer Piso</h3>
+	</div>
+		{% endif %}
+		{% if forloop.counter == 3 %}
+	<div align="center">
+		<h3 style="font-size: 20px">Segundo Piso</h3>
+	</div>
+
+		{% endif %}
+	<div>
+	<table> 
+		<tr>
+		{% for j in i %}
+			<td>
+        <h3 style="font-size: 15px; color: black" align="left">   
+			{% if j.2 > 0 %}
+				<img src="/estadisticas/static/cama_ocupada.jpg" width="80" height="80">
+  		 	{% endif %}		 
+			{% if forloop.last %}
+				</td></tr>
+				<tr><td>
+				<h5 style="font-size: 14px; color: blue;" align="center">Ocupacion <br>{{ j }}%</h5>	
+  		 	{% endif %}		 
+			{% if j.2 = 0 %}
+				<img src="/estadisticas/static/cama_libre.jpg" width="80" height="80">
+  		 	{% endif %}		 
+			</br>
+			{{ j.1 }}
+	    </h3>
+			</td>
+                {% endfor %} 
+		</tr>
+	</table>
+
+	</div>
+	{% endfor %}
+<div class="submit">
+	<input type="submit" name="return" value="Salir">
+</div>
+
+</form>
+</body>
+</html>
+
+
